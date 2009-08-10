@@ -688,10 +688,10 @@ public class CallNotifier extends Handler
             // call is originated from the lower layer without using the UI, and
             // since calling does not go through DIALING state, it skips the steps
             // of setting the Audio Mode
-            if (mPhone.getPhoneType() == Phone.PHONE_TYPE_CDMA) {
-                if (mAudioManager.getMode() != AudioManager.MODE_IN_CALL) {
-                    PhoneUtils.setAudioMode(mPhone.getContext(), AudioManager.MODE_IN_CALL);
-                }
+            AudioManager audioManager =
+                    (AudioManager) mPhone.getContext().getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager.getMode() != AudioManager.MODE_IN_CALL) {
+                PhoneUtils.setAudioMode(mPhone.getContext(), AudioManager.MODE_IN_CALL);
             }
 
             // if the call screen is showing, let it handle the event,
