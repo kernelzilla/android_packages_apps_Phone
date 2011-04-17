@@ -1709,6 +1709,25 @@ public class PhoneApp extends Application implements AccelerometerListener.Orien
             Intent ttyModeChanged = new Intent(TtyIntent.TTY_ENABLED_CHANGE_ACTION);
             ttyModeChanged.putExtra("ttyEnabled", ttymode != Phone.TTY_MODE_OFF);
             sendBroadcast(ttyModeChanged);
+
+            String audioTtyMode;
+            switch (ttymode) {
+            case Phone.TTY_MODE_FULL:
+                audioTtyMode = "tty_full";
+                break;
+            case Phone.TTY_MODE_VCO:
+                audioTtyMode = "tty_vco";
+                break;
+            case Phone.TTY_MODE_HCO:
+                audioTtyMode = "tty_hco";
+                break;
+            case Phone.TTY_MODE_OFF:
+            default:
+                audioTtyMode = "tty_off";
+                break;
+            }
+            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setParameters("tty_mode="+audioTtyMode);
         }
     }
 
